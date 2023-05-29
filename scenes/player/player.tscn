@@ -75,7 +75,6 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=6]
 resource_name = "landing"
 length = 0.3
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Texture:frame")
 tracks/0/interp = 1
@@ -118,6 +117,7 @@ hframes = 8
 vframes = 11
 script = ExtResource( 3 )
 animation = NodePath("../Animation")
+player = NodePath("..")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
@@ -137,3 +137,7 @@ current = true
 limit_top = 0
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[connection signal="animation_finished" from="Animation" to="Texture" method="on_animation_finished"]
