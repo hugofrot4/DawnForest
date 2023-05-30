@@ -13,7 +13,7 @@ var bonus_health: int = 0
 var bonus_mana: int = 0
 var bonus_attack: int = 0
 var bonus_magic_attack: int = 0
-var bonus_magic_defense: int = 0
+var bonus_defense: int = 0
 
 var current_mana: int
 var current_health: int
@@ -58,3 +58,27 @@ func update_exp(value: int) -> void:
 func on_level_up() -> void:
 	current_mana = base_mana + bonus_mana
 	current_health = base_health + bonus_health
+
+func upadate_health(type: String, value: int) -> void:
+	match type:
+		"Increase":
+			current_health += value
+			if current_health >= max_health:
+				current_health = max_health
+			
+		"Decrease":
+			verify_shield(value)
+			if current_health <= 0:
+				pass #Chamar a animação de morte
+			
+			
+func verify_shield(value: int) -> void:
+	if shielding:
+		if (base_defense + bonus_defense) >= value:
+			return
+		
+		var damage = abs((base_defense + bonus_defense) - value)
+		current_health -= damage
+		
+	else:
+		current_health -= value
